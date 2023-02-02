@@ -1,0 +1,82 @@
+{
+  "websites": [
+    {
+      "name": "Tidal Hair",
+      "urls": [
+        "https://www.tidalhair.com/products/tidal-10-minute-hair-mask?variant=39661967605927"
+      ],
+      "showMoreButton": "oke-showMore-button-text oke-button-text",
+      "nextButton": "",
+      "reviewElement": "oke-w-reviews-list-item",
+      "fieldData": [
+        {
+          "fieldName": "title",
+          "className": "oke-reviewContent-title oke-title",
+          "type": "text"
+        },
+        {
+          "fieldName": "body",
+          "className": "oke-reviewContent-body oke-bodyText",
+          "type": "text"
+        },
+        {
+          "fieldName": "reviewDate",
+          "className": "oke-reviewContent-date",
+          "type": "text"
+        },
+        {
+          "fieldName": "reviewerName",
+          "className": "oke-w-reviewer-name",
+          "type": "text"
+        },
+        {
+          "fieldName": "labels",
+          "className": "oke-w-selectAttr-item-title",
+          "type": "array"
+        },
+        {
+          "fieldName": "values",
+          "className": "oke-w-selectAttr-item-value",
+          "type": "array"
+        }
+      ]
+    },
+    {
+      "name": "Hicoco",
+      "urls": [
+        "https://hikoco.co.nz/products/bye-bye-blackhead-30-days-miracle-green-tea-tox-bubble-cleanser"
+      ],
+      "showMoreButton": "jdgm-prev-badge__text",
+      "nextButton": "jdgm-paginate__page jdgm-paginate__next-page",
+      "reviewElement": "jdgm-rev jdgm-divider-top jdgm--done-setup",
+      "fieldData": [
+        {
+          "fieldName": "title",
+          "className": "jdgm-rev__title",
+          "type": "text"
+        },
+        { "fieldName": "body", "className": "jdgm-rev__body", "type": "text" },
+        {
+          "fieldName": "reviewDate",
+          "className": "jdgm-rev__timestamp",
+          "type": "text"
+        },
+        {
+          "fieldName": "reviewerName",
+          "className": "jdgm-rev__author",
+          "type": "text"
+        },
+        {
+          "fieldName": "labels",
+          "className": "jdgm-rev__cf-ans__title",
+          "type": "array"
+        },
+        {
+          "fieldName": "values",
+          "className": "jdgm-rev__cf-ans__value",
+          "type": "array"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+.viewport {
+  background-color: #2f3136;
+  border: 1px solid #99aab5;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+  width: 500px;
+  overflow: hidden;
+  box-shadow: 0px 0px 10px 0px #000000;
+}
+
+.screenshot {
+  max-width: 100%;
+  max-height: 100%;
+}

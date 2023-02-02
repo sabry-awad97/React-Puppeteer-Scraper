@@ -1,0 +1,119 @@
+/* .terminal {
+  background-color: #2b2b2b;
+  color: #fff;
+  font-family: monospace;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow: auto;
+  max-height: 50vh;
+}
+
+.terminal form {
+  display: flex;
+  padding-top: 1rem;
+}
+
+.terminal form input {
+  background-color: #2b2b2b;
+  border: none;
+  border-bottom: 2px solid #50fa7b;
+  color: #fff;
+  flex-grow: 1;
+  font-size: 1rem;
+  outline: none;
+  padding: 0.5rem;
+}
+
+.terminal form span {
+  padding-right: 0.5rem;
+  font-size: 1.2rem;
+  color: #50fa7b;
+}
+
+.terminal pre {
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+  white-space: pre-wrap;
+} */
+
+/* .terminal {
+  background-color: #191919;
+  color: #fff;
+  font-family: monospace;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow: auto;
+  max-height: 50vh;
+  box-shadow: 0 0 1rem #333;
+}
+
+.terminal form {
+  display: flex;
+  padding-top: 1rem;
+}
+
+.terminal form input {
+  background-color: #191919;
+  border: none;
+  border-bottom: 2px solid #50fa7b;
+  color: #fff;
+  flex-grow: 1;
+  font-size: 1rem;
+  outline: none;
+  padding: 0.5rem;
+}
+
+.terminal form span {
+  padding-right: 0.5rem;
+  font-size: 1.2rem;
+  color: #50fa7b;
+}
+
+.terminal pre {
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+  white-space: pre-wrap;
+} */
+
+.terminal {
+    background-color: #36393f;
+    color: #fff;
+    font-family: "Open Sans", sans-serif;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow: auto;
+    max-height: 50vh;
+    box-shadow: 0 0 1rem #2f3136;
+  }
+  
+  .terminal form {
+    display: flex;
+    padding-top: 1rem;
+  }
+  
+  .terminal form input {
+    background-color: #36393f;
+    border: none;
+    border-bottom: 2px solid #7289da;
+    color: #fff;
+    flex-grow: 1;
+    font-size: 1rem;
+    outline: none;
+    padding: 0.5rem;
+  }
+  
+  .terminal form span {
+    padding-right: 0.5rem;
+    font-size: 1.2rem;
+    color: #7289da;
+  }
+  
+  .terminal pre {
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    white-space: pre-wrap;
+  }
+  
