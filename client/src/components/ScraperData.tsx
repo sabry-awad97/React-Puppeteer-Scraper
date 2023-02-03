@@ -10,7 +10,6 @@ import RecordViewer from './RecordViewer';
 import { Table } from './table/Table';
 
 const ScraperData = () => {
-  // const scrapedData = useDataPolling('/reviews.json');
   const scrapedData = useDataWithKeys();
   const theme = useContext(ThemeContext);
 
@@ -68,7 +67,7 @@ const ScraperData = () => {
               }}
             />
           </div>
-          <div className="table-responsive">
+          <div>
             <Table
               data={scrapedData}
               dataSource={paginatedData}

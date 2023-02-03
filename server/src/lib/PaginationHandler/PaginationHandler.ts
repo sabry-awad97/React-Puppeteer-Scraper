@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Page } from 'puppeteer';
+import { ElementHandle, Page } from 'puppeteer';
 
 import { checkRateLimit } from '../../helpers/checkRateLimit/checkRateLimit.js';
 import { classNameToSelector } from '../../helpers/classNameToSelector/classNameToSelector.js';
@@ -156,6 +156,40 @@ export class PaginationHandler {
 
   getNewElementData() {
     return this.parseElementsWithStreams();
+  }
+
+  async findCommonAncestor(
+    ...elementHandles: ElementHandle[]
+  ): Promise<ElementHandle | null> {
+    const result = await this.page.evaluateHandle((...handles) => {
+      let ancestors = new Set<Node | null>();
+      let currentNode: Node | null = handles[0];
+      let found = false;
+      while (currentNode) {
+        ancestors.add(currentNode);
+        currentNode = currentNode.parentNode;
+      }
+      let commonAncestor: Node | null = null;
+      for (let i = 1; i < handles.length; i++) {
+        currentNode = handles[i];
+        while (currentNode) {
+          if (ancestors.has(currentNode)) {
+            if (!found) {
+              found = true;
+              commonAncestor = currentNode;
+            } else {
+              ancestors.clear();
+              ancestors.add(commonAncestor);
+              currentNode = commonAncestor;
+            }
+          }
+          currentNode = currentNode ? currentNode.parentNode : null;
+        }
+      }
+      return commonAncestor;
+    }, ...elementHandles);
+
+    return result.asElement() as ElementHandle<Element>;
   }
 
   private parseElementsWithStreams() {
