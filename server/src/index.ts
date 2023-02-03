@@ -1,13 +1,17 @@
-import { WebSocketServer, RawData } from 'ws';
-import { createServer } from 'http';
 import { EventEmitter } from 'events';
+import express from 'express';
+import { createServer } from 'http';
+import { RawData, WebSocketServer } from 'ws';
 
-import { ParallelScraper } from './lib/ParallelScraper.js';
-import { DataHandler } from './lib/DataHandler.js';
 import database from './database/Database.js';
+import { DataHandler } from './lib/DataHandler.js';
+import { ParallelScraper } from './lib/ParallelScraper.js';
 
-const server = createServer();
+const app = express();
+const server = createServer(app);
 const ws = new WebSocketServer({ server });
+
+app.use(express.static('./public'));
 
 const concurrency = 1;
 class ScraperEvents extends EventEmitter {}
@@ -45,10 +49,10 @@ dataHandler.on('page:5runs', data => {
   });
 });
 
-dataHandler.on('page:screenshot', (screenshot) => {
+dataHandler.on('page:screenshot', screenshot => {
   scraperEvents.emit('page:screenshot', {
     type: 'page:screenshot',
-    payload: screenshot.toString("base64"),
+    payload: screenshot.toString('base64'),
   });
 });
 
@@ -121,5 +125,5 @@ server.on('error', (error: NodeJS.ErrnoException) => {
 });
 
 server.listen(3000, async () => {
-  console.log(`Server started on port ${3000}`);
+  console.log(`Server is running on http://localhost:3000`);
 });
