@@ -28,7 +28,7 @@ export class DataHandler {
     this.eventEmitter.emit('dataSave:start', data);
     try {
       await database.saveRecords(data);
-      // this.eventEmitter.emit('dataSave:success', data);
+      this.eventEmitter.emit('dataSave:success', data);
     } catch (error) {
       this.eventEmitter.emit('dataSave:error', error);
     }

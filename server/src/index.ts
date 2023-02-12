@@ -4,7 +4,7 @@ import { setupWebSocket } from './server/websocket.js';
 const app = express();
 const server = createServer(app);
 
-app.use(express.static('public'));
+// app.use(express.static('public'));
 
 setupWebSocket(server);
 

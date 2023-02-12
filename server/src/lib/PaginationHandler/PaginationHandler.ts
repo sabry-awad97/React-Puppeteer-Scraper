@@ -43,7 +43,6 @@ export class PaginationHandler {
     for (const record of newData) {
       if (!includes(this.data, record)) {
         this.data.push(record);
-        await this.dataHandler.saveToMongo([record]);
       }
     }
     this.dataHandler.emit(PageEvents.PageData, this.data);
