@@ -28,7 +28,7 @@ export class DataHandler {
     this.eventEmitter.emit('dataSave:start', data);
     try {
       await database.saveRecords(data);
-      this.eventEmitter.emit('dataSave:success', data);
+      // this.eventEmitter.emit('dataSave:success', data);
     } catch (error) {
       this.eventEmitter.emit('dataSave:error', error);
     }
@@ -55,7 +55,10 @@ export class DataHandler {
     listener: (data: IRecord[]) => void
   ): void;
   on(event: `${PageEvents.PageNext}`, listener: (button: string) => void): void;
-  on(event: `${PageEvents.PageScreenShot}`, listener: (screenshot: string | Buffer) => void): void;
+  on(
+    event: `${PageEvents.PageScreenShot}`,
+    listener: (screenshot: string | Buffer) => void
+  ): void;
   on(
     event: `${DataSaveEvents.DataSaveStart}`,
     listener: (data: IRecord[]) => void

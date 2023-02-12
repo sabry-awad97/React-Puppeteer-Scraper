@@ -14,8 +14,11 @@ import { DataHandler } from '../DataHandler.js';
 import { ElementDataExtractor } from './streams/ElementDataExtractor.js';
 import { DataSink } from './streams/DataSink.js';
 import { ElementDataSource } from './streams/ElementDataSource.js';
+import { includes } from '../../helpers/includes/index.js';
 
 export class PaginationHandler {
+  private data: IRecord[] = [];
+
   private prevDataLength: number = 0;
   constructor(
     private readonly page: Page,
@@ -33,52 +36,55 @@ export class PaginationHandler {
     return this.page.url();
   }
 
-  async takeScreenshot() {
+  async updateData() {
     const screenshot = await this.page.screenshot();
-    return screenshot;
+    this.dataHandler.emit(PageEvents.PageScreenShot, screenshot);
+    const newData = await this.getNewElementData();
+    for (const record of newData) {
+      if (!includes(this.data, record)) {
+        this.data.push(record);
+        await this.dataHandler.saveToMongo([record]);
+      }
+    }
+    this.dataHandler.emit(PageEvents.PageData, this.data);
   }
 
   async handle() {
+    this.dataHandler.emit(PageEvents.PageStart);
+
     await this.checkBlocking();
     try {
-      this.dataHandler.emit(PageEvents.PageStart);
-      let data = await this.getNewElementData();
-      this.prevDataLength = data.length;
+      await this.updateData();
+      this.prevDataLength = this.data.length;
 
       let counter = 0;
       while (await this.hasNextPage()) {
         try {
           await this.goToNextPage();
-
-          const newData = await this.getNewElementData();
-          data = [...data, ...newData];
-          this.dataHandler.emit(PageEvents.PageData, data);
+          await this.updateData();
         } catch (error) {
           this.dataHandler.emit('error', error);
         }
 
-        if (this.prevDataLength === data.length) {
+        if (this.prevDataLength === this.data.length) {
           counter++;
         } else {
-          this.prevDataLength = data.length;
+          this.prevDataLength = this.data.length;
           counter = 0;
         }
-
-        const screenshot = await this.takeScreenshot();
-        this.dataHandler.emit(PageEvents.PageScreenShot, screenshot);
 
         if (counter >= 5) {
           console.log(
             'No new data found for 5 consecutive times. Please manually check the page using ChromeDriver'
           );
-          this.dataHandler.emit(PageEvents.Page5Runs, data);
+          this.dataHandler.emit(PageEvents.Page5Runs, this.data);
           break;
         }
       }
 
-      this.dataHandler.emit(PageEvents.PageEnd, data);
+      this.dataHandler.emit(PageEvents.PageEnd, this.data);
 
-      const cleanedData = this.dataHandler.cleanData(data);
+      const cleanedData = this.dataHandler.cleanData(this.data);
       await this.dataHandler.saveToMongo(cleanedData);
       return cleanedData;
     } catch (error) {
@@ -201,8 +207,8 @@ export class PaginationHandler {
       throw new Error(`Invalid class name: ${reviewElement}`);
     }
 
-    return new Promise<IRecord[]>((resolve, reject) => {
-      this.page.$$(parentSelector).then(async parentElements => {
+    return new Promise<IRecord[]>(async (resolve, reject) => {
+      await this.page.$$(parentSelector).then(async parentElements => {
         const elementsToProcess = parentElements.slice(
           nextButton ? 0 : this.prevDataLength
         );
