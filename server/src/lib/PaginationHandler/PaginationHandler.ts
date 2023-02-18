@@ -57,7 +57,11 @@ export class PaginationHandler {
       this.prevDataLength = this.data.length;
 
       let counter = 0;
+      let pageNumber = 0;
       while (await this.hasNextPage()) {
+        const startIterationTime = Date.now();
+        const currrentLength = this.data.length;
+
         try {
           await this.goToNextPage();
           await this.updateData();
@@ -65,12 +69,24 @@ export class PaginationHandler {
           this.dataHandler.emit('error', error);
         }
 
-        if (this.prevDataLength === this.data.length) {
+        if (this.prevDataLength === currrentLength) {
+          console.log('No new reviews found in the last iteration');
           counter++;
         } else {
-          this.prevDataLength = this.data.length;
+          this.prevDataLength = currrentLength;
           counter = 0;
+          pageNumber++;
         }
+
+        const endIterationTime = Date.now();
+        const elapsedIterationTime = endIterationTime - startIterationTime;
+        const elapsedIterationSecs = elapsedIterationTime / 1000;
+
+        console.log(
+          `Extracted ${currrentLength} reviews so far in ${elapsedIterationSecs.toFixed(
+            2
+          )} secs`
+        );
 
         if (counter >= 5) {
           console.log(
