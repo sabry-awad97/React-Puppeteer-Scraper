@@ -25,7 +25,7 @@ export class Field {
     }
 
     const textContent = await Promise.all(
-      childs.map(child => child.evaluate(el => el.textContent || ''))
+      childs.map(child => child.evaluate(el => el.textContent?.trim() || ''))
     );
 
     return this.type.toLocaleLowerCase() === 'text'
@@ -33,7 +33,6 @@ export class Field {
       : textContent;
   }
 }
-
 
 export class ElementDataExtractor extends Transform {
   private fields: Field[];
