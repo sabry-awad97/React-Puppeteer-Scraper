@@ -157,6 +157,7 @@ export class PaginationHandler {
     });
 
     await page.click(selector);
+    await this.page.waitForNetworkIdle();
   }
 
   getNewElementData() {
